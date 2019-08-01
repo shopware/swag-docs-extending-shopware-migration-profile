@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\ProductDataSelection"
+        decorates="SwagMigrationAssistant\Profile\Shopware\DataSelection\ProductDataSelection">
+            <argument type="service" id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\ProductDataSelection.inner"/>
+        </service>
+
+        <service id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleDataSet">
+            <tag name="shopware.migration.data_set" />
+        </service>
+
+        <service id="SwagMigrationBundleExample\Profile\Shopware\Gateway\Local\Reader\LocalBundleReader"
+                 parent="SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\LocalAbstractReader">
+            <tag name="shopware.migration.local_reader" />
+        </service>
+
+        <service id="SwagMigrationBundleExample\Profile\Shopware\Converter\BundleConverter">
+            <argument type="service" id="SwagMigrationAssistant\Migration\Mapping\MappingService"/>
+            <tag name="shopware.migration.converter"/>
+        </service>
+
+        <service id="SwagMigrationBundleExample\Migration\Writer\BundleWriter">
+            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Write\EntityWriter"/>
+            <argument type="service" id="Swag\BundleExample\Core\Content\Bundle\BundleDefinition"/>
+            <tag name="shopware.migration.writer"/>
+        </service>
+    </services>
+</container>

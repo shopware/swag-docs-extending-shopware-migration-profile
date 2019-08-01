@@ -1,0 +1,11 @@
+{
+    "swag-migration": {
+        "index": {
+            "selectDataCard": {
+                "entities": {
+                    "swag_bundle": "Bundles:"
+                }
+            }
+        }
+    }
+}
