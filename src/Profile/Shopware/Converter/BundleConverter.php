@@ -18,7 +18,8 @@ class BundleConverter extends ShopwareConverter
      */
     private $mappingService;
 
-    public function __construct(MappingServiceInterface $mappingService) {
+    public function __construct(MappingServiceInterface $mappingService)
+    {
         $this->mappingService = $mappingService;
     }
 
@@ -63,7 +64,12 @@ class BundleConverter extends ShopwareConverter
         $connectionId = $migrationContext->getConnection()->getId();
         $products = [];
         foreach ($data['products'] as $product) {
-            $productUuid = $this->mappingService->getUuid($connectionId, DefaultEntities::PRODUCT . '_mainProduct', $product, $context);
+            $productUuid = $this->mappingService->getUuid(
+                $connectionId,
+                DefaultEntities::PRODUCT . '_mainProduct',
+                $product,
+                $context
+            );
 
             if ($productUuid === null) {
                 continue;

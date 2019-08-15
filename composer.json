@@ -1,31 +1,32 @@
 {
-  "name": "swag/migration-bundle-example",
-  "description": "Extend the Migration Assistant to migrate SwagAdvDevBundle",
-  "version": "v1.0.0",
-  "type": "shopware-platform-plugin",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "shopware AG"
-    }
-  ],
-  "require": {
-    "shopware/platform": "*"
-  },
-  "extra": {
-    "shopware-plugin-class": "SwagMigrationBundleExample\\SwagMigrationBundleExample",
-    "label": {
-      "de-DE": "Bundle-Migrierung",
-      "en-GB": "Bundle migration"
+    "name": "swag/migration-bundle-example",
+    "description": "Extend the Migration Assistant to migrate SwagAdvDevBundle",
+    "version": "v1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shopware AG"
+        }
+    ],
+    "require": {
+        "shopware/core": "*",
+        "swag/bundle-example": "*"
     },
-    "description": {
-      "de-DE": "Erweitern des Migrationsassistenten zum Migrieren von SwagAdvDevBundle",
-      "en-GB": "Extend the Migration Assistant to migrate SwagAdvDevBundle"
+    "extra": {
+        "shopware-plugin-class": "SwagMigrationBundleExample\\SwagMigrationBundleExample",
+        "label": {
+            "de-DE": "Bundle-Migrierung",
+            "en-GB": "Bundle migration"
+        },
+        "description": {
+            "de-DE": "Erweitern des Migrationsassistenten zum Migrieren von SwagAdvDevBundle",
+            "en-GB": "Extend the Migration Assistant to migrate SwagAdvDevBundle"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SwagMigrationBundleExample\\": "src/"
+        }
     }
-  },
-  "autoload": {
-    "psr-4": {
-      "SwagMigrationBundleExample\\": "src/"
-    }
-  }
 }

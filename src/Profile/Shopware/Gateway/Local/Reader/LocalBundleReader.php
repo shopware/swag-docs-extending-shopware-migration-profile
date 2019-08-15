@@ -11,7 +11,6 @@ use SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleData
 
 class LocalBundleReader extends LocalAbstractReader implements LocalReaderInterface
 {
-
     public function supports(MigrationContextInterface $migrationContext): bool
     {
         return $migrationContext->getProfile() instanceof ShopwareProfileInterface
