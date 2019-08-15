@@ -6,17 +6,17 @@
 
     <services>
         <service id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\ProductDataSelection"
-        decorates="SwagMigrationAssistant\Profile\Shopware\DataSelection\ProductDataSelection">
+                 decorates="SwagMigrationAssistant\Profile\Shopware\DataSelection\ProductDataSelection">
             <argument type="service" id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\ProductDataSelection.inner"/>
         </service>
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleDataSet">
-            <tag name="shopware.migration.data_set" />
+            <tag name="shopware.migration.data_set"/>
         </service>
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\Gateway\Local\Reader\LocalBundleReader"
                  parent="SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\LocalAbstractReader">
-            <tag name="shopware.migration.local_reader" />
+            <tag name="shopware.migration.local_reader"/>
         </service>
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\Converter\BundleConverter">
