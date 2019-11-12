@@ -21,6 +21,7 @@
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\Converter\BundleConverter">
             <argument type="service" id="SwagMigrationAssistant\Migration\Mapping\MappingService"/>
+            <argument type="service" id="SwagMigrationAssistant\Migration\Logging\LoggingService"/>
             <tag name="shopware.migration.converter"/>
         </service>
 

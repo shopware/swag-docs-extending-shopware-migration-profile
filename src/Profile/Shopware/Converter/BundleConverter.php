@@ -5,7 +5,6 @@ namespace SwagMigrationBundleExample\Profile\Shopware\Converter;
 use Shopware\Core\Framework\Context;
 use SwagMigrationAssistant\Migration\Converter\ConvertStruct;
 use SwagMigrationAssistant\Migration\DataSelection\DefaultEntities;
-use SwagMigrationAssistant\Migration\Mapping\MappingServiceInterface;
 use SwagMigrationAssistant\Migration\MigrationContextInterface;
 use SwagMigrationAssistant\Profile\Shopware\Converter\ShopwareConverter;
 use SwagMigrationAssistant\Profile\Shopware\ShopwareProfileInterface;
@@ -13,31 +12,32 @@ use SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleData
 
 class BundleConverter extends ShopwareConverter
 {
-    /**
-     * @var MappingServiceInterface
-     */
-    private $mappingService;
-
-    public function __construct(MappingServiceInterface $mappingService)
-    {
-        $this->mappingService = $mappingService;
-    }
-
     public function supports(MigrationContextInterface $migrationContext): bool
     {
         return $migrationContext->getProfile() instanceof ShopwareProfileInterface
             && $migrationContext->getDataSet()::getEntity() === BundleDataSet::getEntity();
     }
 
+    public function getSourceIdentifier(array $data): string
+    {
+        return $data['id'];
+    }
+
     public function convert(array $data, Context $context, MigrationContextInterface $migrationContext): ConvertStruct
     {
-        $converted = [];
-        $converted['id'] = $this->mappingService->createNewUuid(
+        // Generate a checksum for the data to allow faster migrations in the future
+        $this->generateChecksum($data);
+
+        $mainMapping = $this->mappingService->getOrCreateMapping(
             $migrationContext->getConnection()->getId(),
             BundleDataSet::getEntity(),
             $data['id'],
-            $context
+            $context,
+            $this->checksum
+
         );
+        $converted['id'] = $mainMapping['entityUuid'];
+
         $this->convertValue($converted, 'name', $data, 'name');
         $converted['discountType'] = 'absolute';
         $converted['discount'] = 0;
@@ -64,18 +64,18 @@ class BundleConverter extends ShopwareConverter
         $connectionId = $migrationContext->getConnection()->getId();
         $products = [];
         foreach ($data['products'] as $product) {
-            $productUuid = $this->mappingService->getUuid(
+            $mapping = $this->mappingService->getMapping(
                 $connectionId,
                 DefaultEntities::PRODUCT . '_mainProduct',
                 $product,
                 $context
             );
 
-            if ($productUuid === null) {
+            if ($mapping === null) {
                 continue;
             }
 
-            $newProduct['id'] = $productUuid;
+            $newProduct['id'] = $mapping['entityUuid'];
             $products[] = $newProduct;
         }
 

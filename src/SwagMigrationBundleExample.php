@@ -3,7 +3,8 @@
 namespace SwagMigrationBundleExample;
 
 use Shopware\Core\Framework\Plugin;
-use Shopware\Core\Kernel;
+use Swag\BundleExample\BundleExample;
+use SwagMigrationAssistant\SwagMigrationAssistant;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -14,9 +15,13 @@ class SwagMigrationBundleExample extends Plugin
     {
         parent::build($container);
 
-        $migrationPlugin = Kernel::getPlugins()->get(\SwagMigrationAssistant\SwagMigrationAssistant::class);
-        if ($migrationPlugin === null || $migrationPlugin->isActive() === false) {
-            return;
+        $activePlugins = $container->getParameter('kernel.active_plugins');
+        if (!isset($activePlugins[SwagMigrationAssistant::class])) {
+            throw new \Exception('The plugin SwagMigrationAssistant is required, please install and activate it first');
+        }
+
+        if (!isset($activePlugins[BundleExample::class])) {
+            throw new \Exception('The plugin SwagBundleExample is required, please install and activate it first');
         }
 
         // Only load migration relevant classes if the SwagMigrationAssistant is available

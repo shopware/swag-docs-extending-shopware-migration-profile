@@ -6,6 +6,7 @@ use SwagMigrationAssistant\Migration\DataSelection\DataSelectionInterface;
 use SwagMigrationAssistant\Migration\DataSelection\DataSelectionStruct;
 use SwagMigrationAssistant\Migration\MigrationContextInterface;
 use SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleDataSet;
+use SwagMigrationOwnProfileExample\Profile\OwnProfile\DataSelection\DataSet\ProductDataSet;
 
 class ProductDataSelection implements DataSelectionInterface
 {
@@ -31,9 +32,11 @@ class ProductDataSelection implements DataSelectionInterface
         return new DataSelectionStruct(
             $dataSelection->getId(),
             $this->getEntityNames(),
+            $this->getEntityNamesRequiredForCount(),
             $dataSelection->getSnippet(),
             $dataSelection->getPosition(),
-            $dataSelection->getProcessMediaFiles()
+            $dataSelection->getProcessMediaFiles(),
+            DataSelectionStruct::PLUGIN_DATA_TYPE
         );
     }
 
@@ -46,5 +49,12 @@ class ProductDataSelection implements DataSelectionInterface
         $entities[] = BundleDataSet::getEntity();
 
         return $entities;
+    }
+
+    public function getEntityNamesRequiredForCount(): array
+    {
+        return [
+            ProductDataSet::getEntity(),
+        ];
     }
 }
