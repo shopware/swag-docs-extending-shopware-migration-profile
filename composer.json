@@ -11,7 +11,8 @@
     ],
     "require": {
         "shopware/core": "*",
-        "swag/bundle-example": "*"
+        "swag/bundle-example": "*",
+        "swag/migration-assistant": "*"
     },
     "extra": {
         "shopware-plugin-class": "SwagMigrationBundleExample\\SwagMigrationBundleExample",
