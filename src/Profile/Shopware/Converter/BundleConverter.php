@@ -28,7 +28,7 @@ class BundleConverter extends ShopwareConverter
         // Generate a checksum for the data to allow faster migrations in the future
         $this->generateChecksum($data);
 
-        $mainMapping = $this->mappingService->getOrCreateMapping(
+        $this->mainMapping = $this->mappingService->getOrCreateMapping(
             $migrationContext->getConnection()->getId(),
             BundleDataSet::getEntity(),
             $data['id'],
@@ -36,7 +36,7 @@ class BundleConverter extends ShopwareConverter
             $this->checksum
 
         );
-        $converted['id'] = $mainMapping['entityUuid'];
+        $converted['id'] = $this->mainMapping['entityUuid'];
 
         $this->convertValue($converted, 'name', $data, 'name');
         $converted['discountType'] = 'absolute';
@@ -56,7 +56,12 @@ class BundleConverter extends ShopwareConverter
             $data['products']
         );
 
-        return new ConvertStruct($converted, $data);
+        if (empty($data)) {
+            $data = null;
+        }
+        $this->updateMainMapping($migrationContext, $context);
+
+        return new ConvertStruct($converted, $data, $this->mainMapping['id']);
     }
 
     private function getProducts(Context $context, MigrationContextInterface $migrationContext, array $data): array
