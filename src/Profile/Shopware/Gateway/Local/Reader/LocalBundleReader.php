@@ -4,16 +4,17 @@ namespace SwagMigrationBundleExample\Profile\Shopware\Gateway\Local\Reader;
 
 use Doctrine\DBAL\Connection;
 use SwagMigrationAssistant\Migration\MigrationContextInterface;
-use SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\LocalAbstractReader;
-use SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\LocalReaderInterface;
+use SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\AbstractReader;
+use SwagMigrationAssistant\Profile\Shopware\Gateway\Local\ShopwareLocalGateway;
 use SwagMigrationAssistant\Profile\Shopware\ShopwareProfileInterface;
 use SwagMigrationBundleExample\Profile\Shopware\DataSelection\DataSet\BundleDataSet;
 
-class LocalBundleReader extends LocalAbstractReader implements LocalReaderInterface
+class LocalBundleReader extends AbstractReader
 {
     public function supports(MigrationContextInterface $migrationContext): bool
     {
         return $migrationContext->getProfile() instanceof ShopwareProfileInterface
+            && $migrationContext->getGateway()->getName() === ShopwareLocalGateway::GATEWAY_NAME
             && $migrationContext->getDataSet()::getEntity() === BundleDataSet::getEntity();
     }
 
