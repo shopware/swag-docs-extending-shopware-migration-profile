@@ -15,8 +15,8 @@
         </service>
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\Gateway\Local\Reader\LocalBundleReader"
-                 parent="SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\LocalAbstractReader">
-            <tag name="shopware.migration.local_reader"/>
+                 parent="SwagMigrationAssistant\Profile\Shopware\Gateway\Local\Reader\AbstractReader">
+            <tag name="shopware.migration.reader"/>
         </service>
 
         <service id="SwagMigrationBundleExample\Profile\Shopware\Converter\BundleConverter">
