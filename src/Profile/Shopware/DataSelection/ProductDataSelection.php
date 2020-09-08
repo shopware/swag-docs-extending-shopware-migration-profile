@@ -31,8 +31,8 @@ class ProductDataSelection implements DataSelectionInterface
 
         return new DataSelectionStruct(
             $dataSelection->getId(),
-            $this->getEntityNames(),
-            $this->getEntityNamesRequiredForCount(),
+            $this->getDataSets(),
+            $this->getDataSetsRequiredForCount(),
             $dataSelection->getSnippet(),
             $dataSelection->getPosition(),
             $dataSelection->getProcessMediaFiles(),
@@ -40,21 +40,16 @@ class ProductDataSelection implements DataSelectionInterface
         );
     }
 
-    /**
-     * @return string[]
-     */
-    public function getEntityNames(): array
+    public function getDataSets(): array
     {
-        $entities = $this->originalDataSelection->getEntityNames();
-        $entities[] = BundleDataSet::getEntity();
+        $entities = $this->originalDataSelection->getDataSets();
+        $entities[] = new BundleDataSet();
 
         return $entities;
     }
 
-    public function getEntityNamesRequiredForCount(): array
+    public function getDataSetsRequiredForCount(): array
     {
-        return [
-            ProductDataSet::getEntity(),
-        ];
+        return $this->originalDataSelection->getDataSetsRequiredForCount();
     }
 }
